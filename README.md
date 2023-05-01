@@ -9,10 +9,10 @@ Workflow for deploy and local development
 5. [Generate tls certs](#Generate-tls-certs)
 6. Start services with `docker-compose up -d`
 
-Your local instance will be available on:
-Frontend: https://youtogether.localhost
-Traefik dashboard: https://traefik.youtogether.localhost
-Backend: https://youtogether.localhost/api
+Your local instance will be available on:<br>
+Frontend: https://youtogether.localhost<br>
+Traefik dashboard: https://traefik.youtogether.localhost<br>
+Backend: https://youtogether.localhost/api <br>
 
 ### Generate tls certs
 1. Install `mkcert` with your preferred way, for example with [brew](https://brew.sh/): `brew install mkcert`.
