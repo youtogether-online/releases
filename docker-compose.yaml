@@ -16,6 +16,7 @@ services:
       traefik.http.routers.traefik.rule: "Host(`traefik.${DOMAIN_NAME}`)"
       traefik.http.routers.traefik.tls: "true"
       traefik.http.routers.traefik.service: "api@internal"
+      traefik.http.middlewares.corsheader.headers.accesscontrolalloworiginlist: https://localhost
     restart: unless-stopped
     expose:
       - "8080"
@@ -118,5 +119,5 @@ services:
         EMAIL_FROM: ${EMAIL_FROM}
         EMAIL_USER: ${EMAIL_USER}
         EMAIL_PASSWORD: ${EMAIL_PASSWORD}
-        EMAIL_STMP_HOST: ${EMAIL_STMP_HOST}
-        EMAIL_PORT: ${EMAIL_PORT}
+#        EMAIL_STMP_HOST: ${EMAIL_STMP_HOST}
+#        EMAIL_PORT: ${EMAIL_PORT}
