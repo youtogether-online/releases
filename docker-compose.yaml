@@ -23,7 +23,6 @@ services:
       - target: 80
         published: 80
         mode: host
-
       - target: 443
         published: 443
         mode: host
@@ -101,7 +100,6 @@ services:
       traefik.enable: "true"
       traefik.http.routers.backend.rule: "Host(`${DOMAIN_NAME}`) && PathPrefix(`/api`)"
       traefik.http.services.backend.loadbalancer.server.port: "3000"
-      traefik.http.routers.backend.middlewares: "api-stripprefix@file"
       traefik.http.routers.backend.tls: "true"
       traefik.http.routers.backend.entrypoints: "websecure"
     expose:
@@ -109,14 +107,16 @@ services:
     networks:
       - proxy
     environment:
-      COOKIE_NAME: session_id
-      COOKIE_PATH: /api
-      COOKIE_DURATION: 720h
-      HOST: localhost
-      PORT: "3000"
-      POSTGRES_USERNAME: ${POSTGRES_USERNAME}
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_HOST: ${POSTGRES_HOST}
-      POSTGRES_PORT: 5432
-      REDIS_PORT: 6379
+        COOKIE_NAME: session_id
+        COOKIE_PATH: /api
+        COOKIE_DURATION: 720h
+        POSTGRES_USERNAME: ${POSTGRES_USERNAME}
+        POSTGRES_DB: ${POSTGRES_DB}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        HOST: localhost
+        PORT: 3000
+        EMAIL_FROM: ${EMAIL_FROM}
+        EMAIL_USER: ${EMAIL_USER}
+        EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+        EMAIL_STMP_HOST: ${EMAIL_STMP_HOST}
+        EMAIL_PORT: ${EMAIL_PORT}
