@@ -113,7 +113,7 @@ services:
         POSTGRES_USERNAME: ${POSTGRES_USERNAME}
         POSTGRES_DB: ${POSTGRES_DB}
         POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-        HOST: localhost
+        HOST: ${DOMAIN_NAME}
         PORT: 3000
         EMAIL_FROM: ${EMAIL_FROM}
         EMAIL_USER: ${EMAIL_USER}
