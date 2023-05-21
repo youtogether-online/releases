@@ -15,13 +15,13 @@ Traefik dashboard: https://traefik.youtogether.localhost<br>
 Backend: https://youtogether.localhost/api <br>
 
 ### Generate tls certs
-1. Install `mkcert` with your preferred way, for example with [brew](https://brew.sh/): `brew install mkcert`.
+1. Install `mkcert` with your preferred way. [Brew](https://brew.sh) - `brew install mkcert`, [Cholocatey](https://chocolatey.org/install) - `choco install mkcert`
 2. Run `mkcert -install`
 3. Run `sh scripts/create-cert.sh`
 
 ### Environment variables
 | Name              | Description                                                                                                                                                                                              |
-|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | POSTGRES_USERNAME | Postgres username                                                                                                                                                                                        |
 | POSTGRES_HOST     | Postgres host. If you use default name for postgres service (postgres), you can use localhost. If you want to rename this service you should use service name in this variable, such as database service |
 | POSTGRES_DB       | Postgres database                                                                                                                                                                                        |
