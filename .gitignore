@@ -1,3 +1,4 @@
 .idea
 .env
-tls/*.*
+tls/youtogether-local-cert.pem
+tls/youtogether-local-key.pem
