@@ -55,7 +55,7 @@ jobs:
           username: ${{ secrets.DEV_USERNAME }}
           password: ${{ secrets.DEV_PASSWORD }}
           script: |
-            ls
+            cd ./releases
             docker compose -f ./docker-compose.yaml -f ./docker-compose.dev.yaml pull --quiet
             docker compose -f ./docker-compose.yaml -f ./docker-compose.dev.yaml build
             docker compose -f ./docker-compose.yaml -f ./docker-compose.dev.yaml up -d --remove-orphans
