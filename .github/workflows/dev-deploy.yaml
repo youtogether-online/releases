@@ -16,18 +16,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      POSTGRES_USERNAME: ${{ secrets.DEV_POSTGRES_USERNAME }}
-      POSTGRES_DB: ${{ secrets.DEV_POSTGRES_DB }}
-      POSTGRES_PASSWORD: ${{ secrets.DEV_POSTGRES_PASSWORD }}
-      POSTGRES_HOST: ${{ secrets.DEV_POSTGRES_HOST }}
-      DOMAIN_NAME: ${{ secrets.DEV_DOMAIN_NAME }}
-      EMAIL: ${{ secrets.DEV_EMAIL }}
-      EMAIL_FROM: "youtogether"
-      EMAIL_USER: ""
-      EMAIL_PASSWORD: ""
-      EMAIL_STMP_HOST: ""
-      EMAIL_PORT: ""
     steps:
       - name: Checkout
         uses: actions/checkout@v3
