@@ -52,6 +52,6 @@ jobs:
             export POSTGRES_HOST="${{ secrets.DEV_POSTGRES_HOST }}"
             export DOMAIN_NAME="${{ secrets.DEV_DOMAIN_NAME }}"
             export EMAIL="${{ secrets.DEV_EMAIL }}"
-            docker compose -f docker-compose.yaml -f docker-compose.dev.yaml pull --quiet
-            docker compose -f docker-compose.yaml -f docker-compose.dev.yaml build
-            docker compose -f docker-compose.yaml -f docker-compose.dev.yaml up -d --remove-orphans
+            docker compose -f ./docker-compose.yaml -f ./docker-compose.dev.yaml pull --quiet
+            docker compose -f ./docker-compose.yaml -f ./docker-compose.dev.yaml build
+            docker compose -f ./docker-compose.yaml -f ./docker-compose.dev.yaml up -d --remove-orphans
