@@ -16,6 +16,18 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      POSTGRES_USERNAME: ${{ secrets.DEV_POSTGRES_USERNAME }}
+      POSTGRES_DB: ${{ secrets.DEV_POSTGRES_DB }}
+      POSTGRES_PASSWORD: ${{ secrets.DEV_POSTGRES_PASSWORD }}
+      POSTGRES_HOST: ${{ secrets.DEV_POSTGRES_HOST }}
+      DOMAIN_NAME: ${{ secrets.DEV_DOMAIN_NAME }}
+      EMAIL: ${{ secrets.DEV_EMAIL }}
+      EMAIL_FROM: "youtogether"
+      EMAIL_USER: ""
+      EMAIL_PASSWORD: ""
+      EMAIL_STMP_HOST: ""
+      EMAIL_PORT: ""
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -27,3 +39,19 @@ jobs:
           password: ${{ secrets.DEV_PASSWORD }}
           source: "."
           target: "/root/releases"
+      - name: Run docker-compose
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEV_HOST }}
+          username: ${{ secrets.DEV_USERNAME }}
+          password: ${{ secrets.DEV_PASSWORD }}
+          script: |
+            export POSTGRES_DB="${{ secrets.DEV_POSTGRES_DB }}"
+            export POSTGRES_USERNAME="${{ secrets.DEV_POSTGRES_USERNAME }}"
+            export POSTGRES_PASSWORD="${{ secrets.DEV_POSTGRES_PASSWORD }}"
+            export POSTGRES_HOST="${{ secrets.DEV_POSTGRES_HOST }}"
+            export DOMAIN_NAME="${{ secrets.DEV_DOMAIN_NAME }}"
+            export EMAIL="${{ secrets.DEV_EMAIL }}"
+            docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml pull --quiet
+            docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml build
+            docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml up -d --remove-orphans
