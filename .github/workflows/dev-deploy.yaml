@@ -40,7 +40,6 @@ jobs:
           envkey_POSTGRES_HOST: ${{ secrets.DEV_POSTGRES_HOST }}
           envkey_DOMAIN_NAME: ${{ secrets.DEV_DOMAIN_NAME }}
           envkey_EMAIL: ${{ secrets.DEV_EMAIL }}
-          directory: .
           file_name: .env
       - name: Copy repository contents via scp
         uses: appleboy/scp-action@master
