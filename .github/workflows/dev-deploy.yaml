@@ -31,6 +31,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Create env file from secrets
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_POSTGRES_USERNAME: ${{ secrets.DEV_POSTGRES_USERNAME }}
+          envkey_POSTGRES_DB: ${{ secrets.DEV_POSTGRES_DB }}
+          envkey_POSTGRES_PASSWORD: ${{ secrets.DEV_POSTGRES_PASSWORD }}
+          envkey_POSTGRES_HOST: ${{ secrets.DEV_POSTGRES_HOST }}
+          envkey_DOMAIN_NAME: ${{ secrets.DEV_DOMAIN_NAME }}
+          envkey_EMAIL: ${{ secrets.DEV_EMAIL }}
+          directory: .
+          file_name: .env
       - name: Copy repository contents via scp
         uses: appleboy/scp-action@master
         with:
@@ -46,12 +57,6 @@ jobs:
           username: ${{ secrets.DEV_USERNAME }}
           password: ${{ secrets.DEV_PASSWORD }}
           script: |
-            export POSTGRES_DB="${{ secrets.DEV_POSTGRES_DB }}"
-            export POSTGRES_USERNAME="${{ secrets.DEV_POSTGRES_USERNAME }}"
-            export POSTGRES_PASSWORD="${{ secrets.DEV_POSTGRES_PASSWORD }}"
-            export POSTGRES_HOST="${{ secrets.DEV_POSTGRES_HOST }}"
-            export DOMAIN_NAME="${{ secrets.DEV_DOMAIN_NAME }}"
-            export EMAIL="${{ secrets.DEV_EMAIL }}"
             docker compose -f ./docker-compose.yaml -f ./docker-compose.dev.yaml pull --quiet
             docker compose -f ./docker-compose.yaml -f ./docker-compose.dev.yaml build
             docker compose -f ./docker-compose.yaml -f ./docker-compose.dev.yaml up -d --remove-orphans
