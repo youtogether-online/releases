@@ -16,7 +16,7 @@ providers:
     network: "youtogether_proxy"
 
   file:
-    filename: "/etc/traefik/dynamic-config.yaml"
+    filename: "/etc/traefik/config.yaml"
     watch: true
 
 entryPoints:
@@ -33,3 +33,11 @@ entryPoints:
     http:
       middlewares:
         - security-headers@file
+
+certificatesResolvers:
+  le:
+    acme:
+      email: frkam@icloud.com
+      storage: /tls/acme.json
+      httpChallenge:
+        entryPoint: web

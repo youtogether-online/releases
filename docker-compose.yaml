@@ -3,7 +3,6 @@ name: youtogether
 
 networks:
   proxy:
-    name: "proxy"
 
 services:
   traefik:
@@ -16,6 +15,7 @@ services:
       traefik.http.routers.traefik.rule: "Host(`traefik.${DOMAIN_NAME}`)"
       traefik.http.routers.traefik.tls: "true"
       traefik.http.routers.traefik.service: "api@internal"
+      traefik.http.routers.traefik.tls.certresolver: "le"
     restart: unless-stopped
     expose:
       - "8080"
@@ -28,9 +28,9 @@ services:
         mode: host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./services/traefik/dynamic-config.yaml:/etc/traefik/dynamic-config.yaml:ro
+      - ./services/traefik/config-local.yaml:/etc/traefik/config.yaml:ro
       - ./services/traefik/traefik.yaml:/etc/traefik/traefik.yaml:ro
-      - ./tls:/etc/tls
+      - ./tls:/tls
     networks:
       - proxy
 
@@ -72,13 +72,14 @@ services:
 
   frontend:
     container_name: frontend
-    image: ghcr.io/youtogether-online/frontend:main
+    image: ghcr.io/youtogether-online/frontend:latest
     restart: unless-stopped
     labels:
       traefik.enable: "true"
       traefik.http.routers.frontend.rule: "Host(`${DOMAIN_NAME}`)"
       traefik.http.routers.frontend.tls: "true"
       traefik.http.routers.frontend.entrypoints: "websecure"
+      traefik.http.routers.frontend.tls.certresolver: "le"
     expose:
       - "5173"
     networks:
@@ -89,19 +90,20 @@ services:
 
   backend:
     container_name: backend
-    image: ghcr.io/youtogether-online/backend:main
+    image: ghcr.io/youtogether-online/backend:latest
     restart: unless-stopped
     depends_on:
-      redis:
-        condition: service_healthy
-      postgres:
-        condition: service_healthy
+        redis:
+          condition: service_healthy
+        postgres:
+          condition: service_healthy
     labels:
       traefik.enable: "true"
       traefik.http.routers.backend.rule: "Host(`${DOMAIN_NAME}`) && PathPrefix(`/api`)"
       traefik.http.services.backend.loadbalancer.server.port: "3000"
       traefik.http.routers.backend.tls: "true"
       traefik.http.routers.backend.entrypoints: "websecure"
+      traefik.http.routers.backend.tls.certresolver: "le"
     expose:
       - "3000"
     networks:

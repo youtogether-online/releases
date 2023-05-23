@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  traefik:
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./services/traefik/config.yaml:/etc/traefik/config.yaml:ro
+      - ./services/traefik/traefik.yaml:/etc/traefik/traefik.yaml:ro
+    labels:
+      traefik.http.routers.traefik.tls.certresolver: "le"
+      traefik.http.routers.traefik.middlewares: "dashboard-auth@file"
+
+  backend:
+    labels:
+       traefik.http.routers.backend.tls.certresolver: "le"
+
+  frontend:
+    labels:
+      traefik.http.routers.frontend.tls.certresolver: "le"
