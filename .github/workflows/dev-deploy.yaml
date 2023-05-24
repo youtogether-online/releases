@@ -6,7 +6,7 @@ on:
     paths:
       - "docker-compose.yaml"
       - "dev.yaml"
-      - ".github/workflows/dev-deploy.yml"
+      - ".github/workflows/dev-deploy.yaml"
       - "services/*"
   repository_dispatch:
     types:
