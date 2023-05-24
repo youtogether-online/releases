@@ -37,8 +37,8 @@ jobs:
           git fetch -p
       - name: Run docker compose
         run: |
-          docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml pull --quiet
-          docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml build
-          docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml up -d --remove-orphans
+          docker compose -f docker-compose.yaml -f docker-compose.dev.yaml pull --quiet
+          docker compose -f docker-compose.yaml -f docker-compose.dev.yaml build
+          docker compose -f docker-compose.yaml -f docker-compose.dev.yaml up -d --remove-orphans
       - name: Clean docker containers and volumes
         run: docker system prune -a --volumes -f
