@@ -32,7 +32,7 @@ jobs:
         run: |
           export POSTGRES_DB=${{ secrets.DEV_POSTGRES_DB }}
           export POSTGRES_PASSWORD=${{ secrets.DEV_POSTGRES_PASSWORD }}
-          export DOMAIN_NAME=${{ secrets.DEV_DOMAIN_NAME }}
+          export HOST=${{ secrets.DEV_DOMAIN_NAME }}
           docker compose -f docker-compose.yaml -f docker-compose.dev.yaml pull --quiet
           docker compose -f docker-compose.yaml -f docker-compose.dev.yaml build
           docker compose -f docker-compose.yaml -f docker-compose.dev.yaml up -d --remove-orphans
