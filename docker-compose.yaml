@@ -12,7 +12,7 @@ services:
     labels:
       traefik.enable: "true"
       traefik.http.routers.traefik.entrypoints: "websecure"
-      traefik.http.routers.traefik.rule: "Host(`traefik.${HOST}`)"
+      traefik.http.routers.traefik.rule: "Host(`traefik.${DOMAIN_NAME}`)"
       traefik.http.routers.traefik.tls: "true"
       traefik.http.routers.traefik.service: "api@internal"
       traefik.http.routers.traefik.tls.certresolver: "le"
@@ -110,7 +110,7 @@ services:
     environment:
         - POSTGRES_DB
         - POSTGRES_PASSWORD
-        - HOST
+        - DOMAIN_NAME
 #        - EMAIL_USER
 #        - EMAIL_PASSWORD
 #        - EMAIL_STMP_HOST
