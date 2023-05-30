@@ -15,7 +15,8 @@ services:
       traefik.http.routers.traefik.rule: "Host(`traefik.${DOMAIN_NAME}`)"
       traefik.http.routers.traefik.tls: "true"
       traefik.http.routers.traefik.service: "api@internal"
-    restart: unless-stopped
+      traefik.http.routers.traefik.tls.certresolver: "le"
+    restart: on-failure:5
     expose:
       - "8080"
     ports:
@@ -36,15 +37,14 @@ services:
   postgres:
     container_name: postgres
     image: postgres:15-alpine3.17
-    restart: unless-stopped
+    restart: on-failure:5
     networks:
       - proxy
     labels:
       traefik.enable: "false"
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_USER: ${POSTGRES_USERNAME}
+      - POSTGRES_DB
+      - POSTGRES_PASSWORD
     ports:
       - "5432:5432"
     healthcheck:
@@ -56,7 +56,7 @@ services:
   redis:
     container_name: redis
     image: redis:7.0.9-alpine3.17
-    restart: unless-stopped
+    restart: on-failure:5
     networks:
       - proxy
     labels:
@@ -72,7 +72,7 @@ services:
   frontend:
     container_name: frontend
     image: ghcr.io/youtogether-online/frontend:latest
-    restart: unless-stopped
+    restart: on-failure:5
     labels:
       traefik.enable: "true"
       traefik.http.routers.frontend.rule: "Host(`${DOMAIN_NAME}`)"
@@ -89,7 +89,7 @@ services:
   backend:
     container_name: backend
     image: ghcr.io/youtogether-online/backend:latest
-    restart: unless-stopped
+    restart: on-failure:5
     depends_on:
         redis:
           condition: service_healthy
@@ -106,16 +106,10 @@ services:
     networks:
       - proxy
     environment:
-        COOKIE_NAME: session_id
-        COOKIE_PATH: /api
-        COOKIE_DURATION: 720h
-        POSTGRES_USERNAME: ${POSTGRES_USERNAME}
-        POSTGRES_DB: ${POSTGRES_DB}
-        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-        HOST: ${DOMAIN_NAME}
-        PORT: 3000
-        EMAIL_FROM: ${EMAIL_FROM}
-        EMAIL_USER: ${EMAIL_USER}
-        EMAIL_PASSWORD: ${EMAIL_PASSWORD}
-#        EMAIL_STMP_HOST: ${EMAIL_STMP_HOST}
-#        EMAIL_PORT: ${EMAIL_PORT}
+        - POSTGRES_DB
+        - POSTGRES_PASSWORD
+        - DOMAIN_NAME
+#        - EMAIL_USER
+#        - EMAIL_PASSWORD
+#        - EMAIL_STMP_HOST
+#        - EMAIL_PORT
