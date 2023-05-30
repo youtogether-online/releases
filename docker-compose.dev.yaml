@@ -8,7 +8,6 @@ services:
       - ./services/traefik/traefik.yaml:/etc/traefik/traefik.yaml:ro
     labels:
       traefik.http.routers.traefik.tls.certresolver: "le"
-      traefik.http.routers.traefik.middlewares: "dashboard-auth@file"
 
   backend:
     labels:
