@@ -1,9 +1,5 @@
 http:
   middlewares:
-    dashboard-auth:
-      basic-auth:
-        users:
-          - "admin:$2y$19$XTlzI4VCrofnL87xC/5zKehkGTDkRSksOywgkFOBXHAZHTIdO9PZ6"
     security-headers:
       headers:
         frameDeny: true

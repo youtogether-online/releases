@@ -15,7 +15,6 @@ services:
       traefik.http.routers.traefik.rule: "Host(`traefik.${DOMAIN_NAME}`)"
       traefik.http.routers.traefik.tls: "true"
       traefik.http.routers.traefik.service: "api@internal"
-      traefik.http.routers.traefik.tls.certresolver: "le"
     restart: on-failure:5
     expose:
       - "8080"

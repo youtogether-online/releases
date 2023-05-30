@@ -8,7 +8,8 @@ services:
       - ./services/traefik/traefik.yaml:/etc/traefik/traefik.yaml:ro
     labels:
       traefik.http.routers.traefik.tls.certresolver: "le"
-      traefik.http.routers.traefik.middlewares: "dashboard-auth@file"
+      traefik.http.middlewares.dashboard-auth.basicauth.users: "frkam:$$2a$$14$$pa2YRmNl1t/9NpDBYZ.SXO.aYqugeQMRIeJ49A5cmFVIT1jYArjdu"
+      traefik.http.routers.traefik.middlewares: "dashboard-auth@docker"
 
   backend:
     labels:
