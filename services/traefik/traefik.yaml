@@ -39,5 +39,6 @@ certificatesResolvers:
     acme:
       email: frkam@icloud.com
       storage: /tls/acme.json
+      tlsChallenge: {}
       httpChallenge:
         entryPoint: web

@@ -19,5 +19,5 @@ http:
 
 tls:
   certificates:
-    - certFile: "/etc/tls/youtogether-local-cert.pem"
-      keyFile: "/etc/tls/youtogether-local-key.pem"
+    - certFile: "/tls/youtogether-local-cert.pem"
+      keyFile: "/tls/youtogether-local-key.pem"
