@@ -12,7 +12,7 @@ http:
         isDevelopment: false
         accessControlAllowMethods: "*"
         accessControlAllowHeaders: "*"
-        accessControlAllowOrigin: "*"
+        AccessControlAllowOriginList: ["*"]
         accessControlMaxAge: 100
         addVaryHeader: true
 
