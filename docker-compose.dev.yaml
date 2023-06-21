@@ -18,3 +18,7 @@ services:
   frontend:
     labels:
       traefik.http.routers.frontend.tls.certresolver: "le"
+
+  mock:
+    labels:
+      traefik.http.routers.mock.tls.certresolver: "le"
