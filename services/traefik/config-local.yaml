@@ -12,8 +12,7 @@ http:
         isDevelopment: false
         accessControlAllowMethods: "*"
         accessControlAllowHeaders: "*"
-        accessControlAllowOriginList:
-          - https://localhost:5173
+        accessControlAllowOrigin: "*"
         accessControlMaxAge: 100
         addVaryHeader: true
 

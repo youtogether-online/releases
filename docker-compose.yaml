@@ -9,6 +9,9 @@ services:
     container_name: proxy
     hostname: traefik
     image: traefik:v2.10
+    profiles:
+      - mock
+      - default
     labels:
       traefik.enable: "true"
       traefik.http.routers.traefik.entrypoints: "websecure"
@@ -37,6 +40,8 @@ services:
     container_name: postgres
     image: postgres:15-alpine3.17
     restart: on-failure:5
+    profiles:
+      - default
     networks:
       - proxy
     labels:
@@ -56,6 +61,8 @@ services:
     container_name: redis
     image: redis:7.0.9-alpine3.17
     restart: on-failure:5
+    profiles:
+      - default
     networks:
       - proxy
     labels:
@@ -72,6 +79,9 @@ services:
     container_name: frontend
     image: ghcr.io/youtogether-online/frontend:latest
     restart: on-failure:5
+    profiles:
+      - default
+      - mock
     labels:
       traefik.enable: "true"
       traefik.http.routers.frontend.rule: "Host(`${DOMAIN_NAME}`)"
@@ -89,6 +99,8 @@ services:
     container_name: backend
     image: ghcr.io/youtogether-online/backend:latest
     restart: on-failure:5
+    profiles:
+      - default
     depends_on:
         redis:
           condition: service_healthy
@@ -112,3 +124,20 @@ services:
 #        - EMAIL_PASSWORD
 #        - EMAIL_STMP_HOST
 #        - EMAIL_PORT
+
+  mock:
+    container_name: mocked-backend
+    image: ghcr.io/youtogether-online/mock:latest
+    profiles:
+      - mock
+    restart: on-failure:5
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.mock.rule: "Host(`${DOMAIN_NAME}`) && PathPrefix(`/api`)"
+      traefik.http.services.mock.loadbalancer.server.port: "3000"
+      traefik.http.routers.mock.tls: "true"
+      traefik.http.routers.mock.entrypoints: "websecure"
+    expose:
+      - 3000
+    networks:
+      - proxy
