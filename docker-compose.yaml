@@ -81,7 +81,6 @@ services:
     restart: on-failure:5
     profiles:
       - default
-      - mock
     labels:
       traefik.enable: "true"
       traefik.http.routers.frontend.rule: "Host(`${DOMAIN_NAME}`)"
@@ -92,8 +91,7 @@ services:
     networks:
       - proxy
     environment:
-      API_URL: https://youtogether.local/api
-      PORT: "5173"
+      API_URL: /api
 
   backend:
     container_name: backend
@@ -125,7 +123,7 @@ services:
 #        - EMAIL_STMP_HOST
 #        - EMAIL_PORT
 
-  mock:
+  backend-mocked:
     container_name: mocked-backend
     image: ghcr.io/youtogether-online/mock:latest
     profiles:
@@ -133,11 +131,29 @@ services:
     restart: on-failure:5
     labels:
       traefik.enable: "true"
-      traefik.http.routers.mock.rule: "Host(`${DOMAIN_NAME}`) && PathPrefix(`/api`)"
-      traefik.http.services.mock.loadbalancer.server.port: "3000"
-      traefik.http.routers.mock.tls: "true"
-      traefik.http.routers.mock.entrypoints: "websecure"
+      traefik.http.routers.backend-mocked.rule: "Host(`mocked.${DOMAIN_NAME}`) && PathPrefix(`/api`)"
+      traefik.http.services.backend-mocked.loadbalancer.server.port: "3000"
+      traefik.http.routers.backend-mocked.tls: "true"
+      traefik.http.routers.backend-mocked.entrypoints: "websecure"
     expose:
-      - 3000
+      - 3001
+    networks:
+      - proxy
+
+  frontend-mocked:
+    container_name: mocked-frontend
+    image: ghcr.io/youtogether-online/frontend:latest
+    profiles:
+      - mock
+    restart: on-failure:5
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.frontend-mocked.rule: "Host(`mocked.${DOMAIN_NAME}`)"
+      traefik.http.routers.frontend-mocked.tls: "true"
+      traefik.http.routers.frontend-mocked.entrypoints: "websecure"
+    expose:
+      - 5174
+    environment:
+      API_URL: /api
     networks:
       - proxy
