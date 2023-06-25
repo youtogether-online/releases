@@ -118,10 +118,10 @@ services:
         - POSTGRES_DB
         - POSTGRES_PASSWORD
         - DOMAIN_NAME
-#        - EMAIL_USER
-#        - EMAIL_PASSWORD
-#        - EMAIL_STMP_HOST
-#        - EMAIL_PORT
+        - EMAIL_USER
+        - EMAIL_PASSWORD
+        - EMAIL_STMP_HOST
+        - EMAIL_PORT
 
   backend-mocked:
     container_name: mocked-backend

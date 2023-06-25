@@ -7,7 +7,11 @@ Workflow for deploy and local development
 3. `cd releases`
 4. Copy `.env.sample` to `.env`, you can use `cp .env.sample .env`
 5. [Generate tls certs](#Generate-tls-certs)
-6. Start services with `docker-compose up -d`
+6. Start services with `docker-compose up --profile <profile-name> -d`
+
+Docker profiles:
+1. Default - profile with real backend, redis, postgres and frontend
+2. Mock - profile with mocked backend and frontend 
 
 Your local instance will be available on:<br>
 Frontend: https://youtogether.localhost<br>
