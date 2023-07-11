@@ -92,6 +92,7 @@ services:
       - proxy
     environment:
       API_URL: /api
+      PREVIEW: false
 
   backend:
     container_name: backend
@@ -131,7 +132,7 @@ services:
     restart: on-failure:5
     labels:
       traefik.enable: "true"
-      traefik.http.routers.backend-mocked.rule: "Host(`mocked.${DOMAIN_NAME}`) && PathPrefix(`/api`)"
+      traefik.http.routers.backend-mocked.rule: "Host(`preview.${DOMAIN_NAME}`) && PathPrefix(`/api`)"
       traefik.http.services.backend-mocked.loadbalancer.server.port: "3000"
       traefik.http.routers.backend-mocked.tls: "true"
       traefik.http.routers.backend-mocked.entrypoints: "websecure"
@@ -148,12 +149,13 @@ services:
     restart: on-failure:5
     labels:
       traefik.enable: "true"
-      traefik.http.routers.frontend-mocked.rule: "Host(`mocked.${DOMAIN_NAME}`)"
+      traefik.http.routers.frontend-mocked.rule: "Host(`preview.${DOMAIN_NAME}`)"
       traefik.http.routers.frontend-mocked.tls: "true"
       traefik.http.routers.frontend-mocked.entrypoints: "websecure"
     expose:
       - 5174
     environment:
       API_URL: /api
+      PREVIEW: true
     networks:
       - proxy
