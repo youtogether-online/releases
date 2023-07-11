@@ -33,11 +33,11 @@ jobs:
           export POSTGRES_DB=${{ secrets.DEV_POSTGRES_DB }}
           export POSTGRES_PASSWORD=${{ secrets.DEV_POSTGRES_PASSWORD }}
           export DOMAIN_NAME=${{ secrets.DEV_DOMAIN_NAME }}
-          export EMAIL_FROM=${{ secrets.DEV_EMAIL_FROM }}
           export EMAIL_STMP_HOST=${{ secrets.DEV_EMAIL_STMP_HOST }}
           export EMAIL_PORT=${{ secrets.DEV_EMAIL_PORT }}
           export EMAIL_USER=${{ secrets.DEV_EMAIL_USER }}
           export EMAIL_PASSWORD=${{ secrets.DEV_EMAIL_PASSWORD }}
+          export REDIS_PASSWORD=${{ secrets.DEV_REDIS_PASSWORD }}
           docker compose -f docker-compose.yaml -f docker-compose.dev.yaml --profile default --profile mock pull --quiet
           docker compose -f docker-compose.yaml -f docker-compose.dev.yaml --profile default --profile mock build
           docker compose -f docker-compose.yaml -f docker-compose.dev.yaml --profile default --profile mock up -d --remove-orphans

@@ -65,6 +65,8 @@ services:
       - default
     networks:
       - proxy
+    command: >
+      --requirepass ${REDIS_PASSWORD}
     labels:
       traefik.enable: "false"
     ports:
@@ -121,6 +123,7 @@ services:
         - DOMAIN_NAME
         - EMAIL_USER
         - EMAIL_PASSWORD
+        - REDIS_PASSWORD
         - EMAIL_STMP_HOST
         - EMAIL_PORT
 
